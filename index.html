@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pluto.tv embed test</title>
+    <script src="http://dev.pluto.tv/outstream/sdk.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        #controls {
+            margin-bottom: 10px;
+        }
+
+        #video {
+            position: relative;
+            height: 80%;
+        }
+    </style>
+</head>
+<body>
+    <h1>PlutoTV embed test</h1>
+
+    <div id="controls">
+        <button id="toggle-fullscreen">Toggle Fullscreen</button>
+
+        <button id="toggle-guide-option">Guide On/Off</button>
+        <button id="show-guide">Show Guide</button>
+        <button id="hide-guide">Hide Guide</button>
+        <button id="toggle-guide">Toggle Guide</button>
+
+        <button id="select-channel">News Rack Channel</button>
+        <button id="previous-channel">Previous Channel</button>
+        <button id="next-channel">Next Channel</button>
+    </div>
+
+    <div id="video"></div>
+
+    <script>
+        var plutoTV = new PlutoTV('video', {
+            guide: true,
+            debug: true
+        }, 'http://dev.pluto.tv');
+
+        document.getElementById('toggle-fullscreen').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.toggleFullscreen();
+        });
+
+        document.getElementById('toggle-guide-option').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.setOption('guide', !plutoTV.getOption('guide'));
+        });
+
+        document.getElementById('show-guide').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.showGuide();
+        });
+
+        document.getElementById('hide-guide').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.hideGuide();
+        });
+
+        document.getElementById('toggle-guide').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.toggleGuide();
+        });
+
+        document.getElementById('select-channel').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.selectChannel('news-rack');
+        });
+
+        document.getElementById('previous-channel').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.previousChannel();
+        });
+
+        document.getElementById('next-channel').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.nextChannel();
+        });
+    </script>
+</body>
+</html>
