@@ -32,9 +32,17 @@
     <div id="controls">
         <button id="toggle-fullscreen">Toggle Fullscreen</button>
 
+        <button id="toggle-play">Toggle Play</button>
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+
+        <button id="toggle-mute">Toggle Mute</button>
+        <button id="mute">Mute</button>
+        <button id="unmute">Unmute</button>
+
         <button id="toggle-guide-option">Guide On/Off</button>
-        <button id="show-guide">Show Guide</button>
-        <button id="hide-guide">Hide Guide</button>
+        <button id="expand-guide">Expand Guide</button>
+        <button id="collapse-guide">Collapse Guide</button>
         <button id="toggle-guide">Toggle Guide</button>
 
         <button id="select-channel">News Rack Channel</button>
@@ -50,6 +58,56 @@
             debug: true
         }, 'http://dev.pluto.tv');
 
+        plutoTV.addEventListener('fullscreenchange', function(e) {
+            console.log('Parent: iframe changed to ' + (e.isFullscreen ? 'fullscreen' : 'not fullscreen'));
+        });
+
+        plutoTV.addEventListener('play', function(e) {
+            console.log('Parent: iframe playing');
+        });
+
+        plutoTV.addEventListener('pause', function(e) {
+            console.log('Parent: iframe paused');
+        });
+
+        plutoTV.addEventListener('mute', function(e) {
+            console.log('Parent: iframe muted');
+        });
+
+        plutoTV.addEventListener('unmute', function(e) {
+            console.log('Parent: iframe unmuted');
+        });
+
+        document.getElementById('toggle-play').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.togglePlay();
+        });
+
+        document.getElementById('play').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.play();
+        });
+
+        document.getElementById('pause').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.pause();
+        });
+
+        document.getElementById('toggle-mute').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.toggleMute();
+        });
+
+        document.getElementById('mute').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.mute();
+        });
+
+        document.getElementById('unmute').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.unmute();
+        });
+
         document.getElementById('toggle-fullscreen').addEventListener('click', function(e) {
             e.preventDefault();
             plutoTV.toggleFullscreen();
@@ -60,14 +118,14 @@
             plutoTV.setOption('guide', !plutoTV.getOption('guide'));
         });
 
-        document.getElementById('show-guide').addEventListener('click', function(e) {
+        document.getElementById('expand-guide').addEventListener('click', function(e) {
             e.preventDefault();
-            plutoTV.showGuide();
+            plutoTV.expandGuide();
         });
 
-        document.getElementById('hide-guide').addEventListener('click', function(e) {
+        document.getElementById('collapse-guide').addEventListener('click', function(e) {
             e.preventDefault();
-            plutoTV.hideGuide();
+            plutoTV.collapseGuide();
         });
 
         document.getElementById('toggle-guide').addEventListener('click', function(e) {
