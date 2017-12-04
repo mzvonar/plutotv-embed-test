@@ -48,9 +48,18 @@
         <button id="select-channel">News Rack Channel</button>
         <button id="previous-channel">Previous Channel</button>
         <button id="next-channel">Next Channel</button>
+
+        <button id="enable-progress">Enable Progress</button>
+        <button id="disable-progress">Disable Progress</button>
+
+        <button id="get-current-time">Get Current Time</button>
+        <button id="get-duration">Get Duration</button>
+
+        <button id="destroy">Destroy</button>
     </div>
 
     <div id="video"></div>
+    <div id="video2"></div>
 
     <script>
         var plutoTV = new PlutoTV('video', {
@@ -60,6 +69,10 @@
 
         plutoTV.addEventListener('fullscreenchange', function(e) {
             console.log('Parent: iframe changed to ' + (e.isFullscreen ? 'fullscreen' : 'not fullscreen'));
+        });
+
+        plutoTV.addEventListener('buffering', function(e) {
+            console.log('Parent: iframe buffering');
         });
 
         plutoTV.addEventListener('play', function(e) {
@@ -77,6 +90,10 @@
         plutoTV.addEventListener('unmute', function(e) {
             console.log('Parent: iframe unmuted');
         });
+
+        function onProgress(e) {
+            console.log('Parent: iframe progress', e);
+        }
 
         document.getElementById('toggle-play').addEventListener('click', function(e) {
             e.preventDefault();
@@ -146,6 +163,43 @@
         document.getElementById('next-channel').addEventListener('click', function(e) {
             e.preventDefault();
             plutoTV.nextChannel();
+        });
+
+        document.getElementById('enable-progress').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.addEventListener('progress', onProgress);
+        });
+
+        document.getElementById('disable-progress').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.removeEventListener('progress', onProgress);
+        });
+
+        document.getElementById('get-current-time').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.getCurrentTime()
+                .then(function(currentTime) {
+                    console.log('Parent: current time: ' + currentTime);
+                })
+                .catch(function(e) {
+                    console.log('Parent: current time error: ', e);
+                });
+        });
+
+        document.getElementById('get-duration').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.getDuration()
+                .then(function(duration) {
+                    console.log('Parent: duration: ' + duration);
+                })
+                .catch(function(e) {
+                    console.log('Parent: duration error: ', e);
+                });
+        });
+
+        document.getElementById('destroy').addEventListener('click', function(e) {
+            e.preventDefault();
+            plutoTV.destroy();
         });
     </script>
 </body>
